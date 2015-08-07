@@ -1,0 +1,26 @@
+{
+  "name": "JobFinder-CI",
+  "version": "0.0.0",
+  "authors": [
+    "Filip Fafara <ffafara@thoughtworks.com>"
+  ],
+  "description": "Sample Continuous Integration Environment",
+  "main": "index.js",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.3",
+    "bootstrap": "~3.3.5"
+  }
+}
