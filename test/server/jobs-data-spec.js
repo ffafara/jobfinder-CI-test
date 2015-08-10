@@ -1,8 +1,8 @@
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
-var jobModel = require('../models/Job');
+var jobModel = require('../../models/Job');
 var Promise = require('bluebird');
-var jobsData = require("../jobs-data.js");
+var jobsData = require("../../jobs-data.js");
 
 function resetJobs() {
 	return new Promise(function(resolve, reject) {
@@ -25,6 +25,10 @@ describe("get jobs", function() {
 			});
 	});
 
+	after(function() {
+		mongoose.connection.close();
+	});
+
 	it("should never be empty since jobs are seeded", function(){
 		expect(jobs.length).to.be.at.least(1);
 	});
@@ -36,4 +40,35 @@ describe("get jobs", function() {
 	it("should have a job with a description", function() {
 		expect(jobs[0].description).to.not.be.empty;
 	});
+});
+
+describe("saveJob()", function() {
+
+	before(function(done){
+		jobsData.connectDB(process.env.MONGOLAB_URI || 'mongodb://localhost/jobfinder')
+			.then(resetJobs)
+			.then(done);
+	});
+
+	after(function(done) {
+		resetJobs()
+			.then(function() {
+				mongoose.connection.close();
+				done()
+			});
+	});
+
+	it("should save job data in database and return created object with id", function(done) {
+		var testJob = {title: "test title", description: "test description"};
+
+		jobsData.saveJob(testJob)
+			.then(function(result) {
+				expect(result).to.include(testJob);
+				expect(result['_id']).to.not.be.empty;
+				done();
+			})
+			.catch(done);
+	})
+
+
 });

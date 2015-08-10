@@ -23,7 +23,7 @@ var db = {
 		return deferred.promise;
 	}
 };
-var jobService = require('../jobs-service')(db, app);
+var jobService = require('../../jobs-service')(db, app);
 
 describe("save jobs", function() {
 	it("should validate that title is greater than 4 characters");

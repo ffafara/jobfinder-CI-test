@@ -26,3 +26,6 @@ exports.seedJobs = function() {
 			}
 		});
 };
+exports.saveJob = function(job) {
+	return createJob(job);
+};
